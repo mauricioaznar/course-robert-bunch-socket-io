@@ -19,9 +19,27 @@ function socketMain (io, socket) {
         } else if (key === 'asdfasd'){
             //valid ui client has joined
             socket.join('ui')
+            console.log('A react client has joined')
+            Machine.find({}, (err, docs) => {
+                docs.forEach((aMachine) => {
+                    // on load assume that all machiens are offline
+                    aMachine.isActive = false
+                    io.to('ui').emit('data', aMachine)
+                })
+            })
         } else {
             socket.disconnect(true)
         }
+    })
+
+    socket.on('disconnect', () => {
+        Machine.find({ macA: macA }, (err, docs) => {
+            if (docs.length > 0) {
+                // send one last emit to react
+                docs[0].isActive = false
+                io.to('ui').emit('data', docs[0])
+            }
+        })
     })
 
     // a machine has connected, check to see if it's new
@@ -37,6 +55,7 @@ function socketMain (io, socket) {
 
     socket.on('perfData', (data) => {
         // console.log(data)
+        io.to('ui').emit('data', data)
     })
 }
 

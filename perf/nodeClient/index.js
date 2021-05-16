@@ -12,6 +12,11 @@ socket.on('connect', () => {
     let macA
     // loop through all the Ni for this machine and find a non-internal one
     for(let key in nI) {
+
+        // for testing purposes
+        macA = Math.floor((Math.random() * 3) + 1)
+        break;
+
         if (nI.hasOwnProperty(key)) {
             if (!nI[key][0].internal) {
                 macA = nI[key][0].mac
@@ -76,6 +81,7 @@ function performanceData () {
         const cpuSpeed = cpus[0].speed
         const numCores = cpus.length
         const cpuLoad = await getCpuLoad()
+        const isActive = true
         resolve({
             freemem,
             upTime,
@@ -87,6 +93,7 @@ function performanceData () {
             cpuSpeed,
             numCores,
             cpuLoad,
+            isActive,
         })
     })
 }

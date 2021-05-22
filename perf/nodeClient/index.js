@@ -5,6 +5,8 @@ const os = require('os')
 const io = require('socket.io-client')
 let socket = io('http://127.0.0.1:8181')
 
+console.log(process.env.NODE_ENV)
+
 socket.on('connect', () => {
     // console.log('I connected to the socket server... hooray!')
     // We need a way to identify this machine to whomever concerned
@@ -121,8 +123,6 @@ function cpuAverage() {
         total: totalMs / cpusDynamic.length
     }
 }
-
-const x = cpuAverage()
 
 // because the times property is time since boot, we will get
 // now times, and 100ms from now times. Compare them, that will

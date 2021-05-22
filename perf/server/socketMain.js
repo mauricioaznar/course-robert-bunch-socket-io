@@ -9,6 +9,8 @@ const Machine = require('./models/Machine')
 // entrypoint from our cluster which will make workes and the workers
 // will do the socket.io handling
 
+console.log(process.env.NODE_ENV)
+
 function socketMain (io, socket) {
     let macA;
     // console.log("Someone called me! i'm socket main", socket.id)
